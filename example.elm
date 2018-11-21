@@ -30,14 +30,6 @@ init =
 -- UPDATE
 
 
-toggleHold : Dice.Dice -> Bool
-toggleHold dice =
-    if dice.held then
-        False
-    else
-        True
-
-
 type Msg
     = Roll
     | Rolled Int
@@ -48,7 +40,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Hold ->
-            ( Dice.hold (toggleHold model) model, Cmd.none )
+            ( Dice.hold (not model.held) model, Cmd.none )
 
         Roll ->
             ( model, Random.generate Rolled (Random.int 1 6) )
