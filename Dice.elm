@@ -103,6 +103,14 @@ createDots requiredDots =
         |> List.map toCircle
 
 
+getBgColor : Dice -> String
+getBgColor dice =
+    if dice.held == True then
+        "#787878"
+    else
+        "#FFFFFF"
+
+
 {-| Get a visual representation of the dice as SVG
 
     model : Dice
@@ -119,11 +127,28 @@ toSVG dice =
     let
         dots =
             Array.get (dice.face - 1) requiredDots
+
+        backgroundColor =
+            getBgColor dice
     in
         case dots of
             Just dots ->
                 createDots dots
-                    |> Svg.svg [ Attributes.width "100", Attributes.height "100" ]
+                    |> (::)
+                        (Svg.rect
+                            [ Attributes.width "100"
+                            , Attributes.height "100"
+                            , Attributes.x "0"
+                            , Attributes.y "0"
+                            , Attributes.fill (getBgColor dice)
+                            ]
+                            []
+                        )
+                    |> Svg.svg
+                        [ Attributes.width "100"
+                        , Attributes.height "100"
+                        , Attributes.viewBox "0 0 100 100"
+                        ]
 
             Nothing ->
                 Html.div [] [ Html.text ("Error: " ++ (toString dice.face) ++ " not rollable.") ]
