@@ -1,6 +1,6 @@
 {
-    "version": "1.0.0",
-    "summary": "Create, handle and visualize a dice.",
+    "version": "0.0.1",
+    "summary": "Create, handle and visualize a dice (simple).",
     "repository": "https://github.com/user/project.git",
     "license": "GPLv3",
     "source-directories": [
