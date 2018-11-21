@@ -30,14 +30,26 @@ init =
 -- UPDATE
 
 
+toggleHold : Dice.Dice -> Bool
+toggleHold dice =
+    if dice.held then
+        False
+    else
+        True
+
+
 type Msg
     = Roll
     | Rolled Int
+    | Hold
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Hold ->
+            ( Dice.hold (toggleHold model) model, Cmd.none )
+
         Roll ->
             ( model, Random.generate Rolled (Random.int 1 6) )
 
@@ -52,11 +64,17 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.div
-        [ Events.onClick Roll
-        , Attributes.style [ ( "border", "1px solid #000" ) ]
+        [ Attributes.style [ ( "border", "1px solid #000" ) ]
         , Attributes.width 100
         ]
         [ Dice.toSVG model
+        , Html.button
+            [ Events.onClick Roll
+            ]
+            [ Html.text "Roll" ]
+        , Html.button
+            [ Events.onClick Hold ]
+            [ Html.text "Hold" ]
         ]
 
 
