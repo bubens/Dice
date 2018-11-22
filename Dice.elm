@@ -151,7 +151,18 @@ toSVG dice =
                         ]
 
             Nothing ->
-                Html.div [] [ Html.text ("Error: " ++ (toString dice.face) ++ " not rollable.") ]
+                Svg.svg
+                    [ Attributes.width "100"
+                    , Attributes.height "100"
+                    , Attributes.viewBox "0 0 100 100"
+                    ]
+                    [ Svg.text_
+                        [ Attributes.x "25"
+                        , Attributes.y "25"
+                        , Attributes.fill "red"
+                        ]
+                        [ Svg.text "Error" ]
+                    ]
 
 
 requiredDots : Array.Array (List Int)
