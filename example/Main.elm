@@ -1,7 +1,6 @@
 module Main exposing (Model, Msg(..), init, main, subscriptions, update, view)
 
 import Browser
-import Debug exposing (log, toString)
 import Dice
 import Html exposing (Html)
 import Html.Attributes as Attributes
@@ -41,10 +40,6 @@ type Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    let
-        xxx =
-            log ("update: " ++ toString msg)
-    in
     case msg of
         Hold ->
             ( Dice.hold (not model.held) model, Cmd.none )
