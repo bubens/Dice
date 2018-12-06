@@ -35,6 +35,7 @@ init _ =
 type Msg
     = Roll
     | Rolled Dice.Face
+    | RollTo String
     | Hold
 
 
@@ -53,6 +54,15 @@ update msg model =
 
         Rolled face ->
             ( Dice.roll face model, Cmd.none )
+
+        RollTo faceStr ->
+            ( faceStr
+                |> String.toInt
+                |> Maybe.withDefault 1
+                |> Dice.rollTo model
+                |> Maybe.withDefault Dice.create
+            , Cmd.none
+            )
 
 
 
@@ -79,6 +89,18 @@ view model =
             , Html.button
                 [ Events.onClick Hold ]
                 [ Html.text "Hold" ]
+            ]
+        , Html.div []
+            [ Html.input
+                [ Attributes.name "rollTo"
+                , Attributes.id "rollTo"
+                , Attributes.type_ "number"
+                , Attributes.min "0"
+                , Attributes.max "10"
+                , Attributes.step "1"
+                , Events.onInput RollTo
+                ]
+                []
             ]
         ]
     }

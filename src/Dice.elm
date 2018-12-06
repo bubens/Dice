@@ -2,7 +2,7 @@ module Dice exposing
     ( Dice
     , create
     , roll, hold
-    , Face, asInt, generateRandomFace, toSvg
+    , Face, generateRandomFace, rollTo, toInt, toSvg
     )
 
 {-| This module is a small helper to create, handle and visualize a Dice.
@@ -105,8 +105,8 @@ Specify newFace by Int. Returns Nothing if newFace is not a valid face.
         |> Maybe.withDefault "Error"
 
 -}
-rollTo : Int -> Dice -> Maybe Dice
-rollTo newFace dice =
+rollTo : Dice -> Int -> Maybe Dice
+rollTo dice newFace =
     case newFace of
         1 ->
             Just (roll One dice)
@@ -153,8 +153,8 @@ Returns current face of dice as int.
     -- -> 2 : Int
 
 -}
-asInt : Dice -> Int
-asInt dice =
+toInt : Dice -> Int
+toInt dice =
     case dice.face of
         One ->
             1
