@@ -38,7 +38,7 @@ import Svg.Attributes as Attributes
 
 
 {-| Unitype for faces of a dice.
-Export only to be used for type-decleration (e.g. Dice.generateRandomFace)
+Exported only to be used for type-decleration (e.g. Dice.generateRandomFace)
 -}
 type Face
     = One
