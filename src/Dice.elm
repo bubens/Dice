@@ -1,8 +1,8 @@
 module Dice exposing
-    ( Dice
+    ( Dice, Face
     , create
-    , roll, hold
-    , Face, generateRandomFace, rollTo, toInt, toSvg
+    , roll, rollTo, hold, generateRandomFace, toInt
+    , toSvg
     )
 
 {-| This module is a small helper to create, handle and visualize a Dice.
@@ -10,7 +10,7 @@ module Dice exposing
 
 # Definition
 
-@docs Dice
+@docs Dice, Face
 
 
 # Create
@@ -20,12 +20,12 @@ module Dice exposing
 
 # Handle
 
-@docs roll, hold
+@docs roll, rollTo, hold, generateRandomFace, toInt
 
 
 # Visualize
 
-@docs toSVG
+@docs toSvg
 
 -}
 
@@ -37,6 +37,9 @@ import Svg
 import Svg.Attributes as Attributes
 
 
+{-| Unitype for faces of a dice.
+Export only to be used for type-decleration (e.g. Dice.generateRandomFace)
+-}
 type Face
     = One
     | Two
@@ -58,8 +61,16 @@ type alias Dice =
 
 
 {-| Generator for random rolls.
+Generates a random face of the type Face.
 
-    {model, Random.generate DiceRolled generateRandomFace }
+    update : Msg -> Model -> ( Model, Msg )
+    update msg model =
+        case msg of
+            RollDice ->
+                ( model, Random.generate DiceRolled generateRandomFace )
+
+            DiceRolled face ->
+                ( Dice.roll face, Cmd.none )
 
 -}
 generateRandomFace : Random.Generator Face
