@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "name": "bubens/dice",
     "summary": "Create, handle and visualize a dice (simple).",
-    "repository": "https://github.com/user/project.git",
+    "repository": "https://github.com/bubens/dice.git",
     "license": "MIT",
     "source-directories": [
         "."
