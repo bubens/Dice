@@ -70,12 +70,21 @@ type alias Document msg =
     }
 
 
+getWidth : Model -> Int
+getWidth dice =
+    if dice.held == True then
+        80
+
+    else
+        100
+
+
 view : Model -> Document Msg
 view model =
     { title = "Elm: bubens/dice example"
     , body =
         [ Html.h1 [] [ Html.text "bubens/dice example" ]
-        , Dice.toSvg model
+        , Dice.toSvg (getWidth model) model
         , Html.div []
             [ Html.button
                 [ Events.onClick Roll

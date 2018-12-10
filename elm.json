@@ -1,6 +1,6 @@
 {
     "type": "package",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "bubens/dice",
     "summary": "Create, handle and visualize a dice (simple).",
     "repository": "https://github.com/bubens/dice.git",

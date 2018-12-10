@@ -194,10 +194,23 @@ toInt dice =
     -- -> <internals> : Html msg
 
 -}
-toSvg : Dice -> Html.Html msg
-toSvg dice =
+toSvg : Int -> Dice -> Html.Html msg
+toSvg width dice =
     getRequiredDots dice.face
-        |> createFaceSvg dice.held
+        |> createFaceSvg width dice.held
+
+
+
+{- getRequiredDots returns a list containing
+   the positions of the dots on a dice' face.
+   Like this:
+
+    0     1
+
+    2  3  4
+
+    5     6
+-}
 
 
 getRequiredDots : Face -> List Int
@@ -222,13 +235,17 @@ getRequiredDots face =
             [ 0, 1, 2, 4, 5, 6 ]
 
 
-createFaceSvg : Bool -> List Int -> Html.Html msg
-createFaceSvg held dots =
-    createDotsSvg dots
+createFaceSvg : Int -> Bool -> List Int -> Html.Html msg
+createFaceSvg width held dots =
+    let
+        strWidth =
+            String.fromInt width
+    in
+    createDotsSvg width dots
         |> (::)
             (Svg.rect
-                [ Attributes.width "100"
-                , Attributes.height "100"
+                [ Attributes.width strWidth
+                , Attributes.height strWidth
                 , Attributes.x "0"
                 , Attributes.y "0"
                 , Attributes.fill (getBgColor held)
@@ -236,57 +253,68 @@ createFaceSvg held dots =
                 []
             )
         |> Svg.svg
-            [ Attributes.width "100"
-            , Attributes.height "100"
-            , Attributes.viewBox "0 0 100 100"
+            [ Attributes.width strWidth
+            , Attributes.height strWidth
+            , Attributes.viewBox ("0 0 " ++ strWidth ++ " " ++ strWidth)
             , Attributes.style "border: solid 1px #000000; border-radius: 10px"
             ]
 
 
-createDotsSvg : List Int -> List (Svg.Svg msg)
-createDotsSvg dots =
+createDotsSvg : Int -> List Int -> List (Svg.Svg msg)
+createDotsSvg width dots =
     dots
         |> List.map (\x -> getDotCoords x)
-        |> List.map toCircleSvg
+        |> List.map
+            (\( pcx, pcy ) ->
+                let
+                    w =
+                        toFloat width
+
+                    x =
+                        String.fromInt <| round <| (pcx * w)
+
+                    y =
+                        String.fromInt <| round <| (pcy * w)
+
+                    r =
+                        String.fromInt <| round <| (0.1 * w)
+                in
+                Svg.circle
+                    [ Attributes.cx x
+                    , Attributes.cy y
+                    , Attributes.r r
+                    , Attributes.fill "#000000"
+                    ]
+                    []
+            )
 
 
-getDotCoords : Int -> ( Int, Int )
+getDotCoords : Int -> ( Float, Float )
 getDotCoords position =
     case position of
         0 ->
-            ( 20, 20 )
+            ( 0.2, 0.2 )
 
         1 ->
-            ( 80, 20 )
+            ( 0.8, 0.2 )
 
         2 ->
-            ( 20, 50 )
+            ( 0.2, 0.5 )
 
         3 ->
-            ( 50, 50 )
+            ( 0.5, 0.5 )
 
         4 ->
-            ( 80, 50 )
+            ( 0.8, 0.5 )
 
         5 ->
-            ( 20, 80 )
+            ( 0.2, 0.8 )
 
         6 ->
-            ( 80, 80 )
+            ( 0.8, 0.8 )
 
         _ ->
-            ( 0, 0 )
-
-
-toCircleSvg : ( Int, Int ) -> Svg.Svg msg
-toCircleSvg ( pcx, pcy ) =
-    Svg.circle
-        [ Attributes.cx (String.fromInt pcx)
-        , Attributes.cy (String.fromInt pcy)
-        , Attributes.r "10"
-        , Attributes.fill "#000000"
-        ]
-        []
+            ( 0.0, 0.0 )
 
 
 getBgColor : Bool -> String
