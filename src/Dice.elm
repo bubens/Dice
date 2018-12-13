@@ -1,7 +1,7 @@
 module Dice exposing
     ( Dice, Face
     , create
-    , roll, rollTo, hold, generateRandomFace, toInt
+    , roll, rollTo, hold, generateRandomFace, toInt, toString
     , toSvg
     )
 
@@ -20,7 +20,7 @@ module Dice exposing
 
 # Handle
 
-@docs roll, rollTo, hold, generateRandomFace, toInt
+@docs roll, rollTo, hold, generateRandomFace, toInt, toString
 
 
 # Visualize
@@ -184,6 +184,28 @@ toInt dice =
 
         Six ->
             6
+
+
+toString : Dice -> String
+toString dice =
+    case dice.face of
+        One ->
+            "One"
+
+        Two ->
+            "Two"
+
+        Three ->
+            "Three"
+
+        Four ->
+            "Four"
+
+        Five ->
+            "Five"
+
+        Six ->
+            "Six"
 
 
 {-| Get a visual representation of the dice as SVG

@@ -1,17 +1,14 @@
 {
     "type": "package",
-    "version": "1.0.1",
     "name": "bubens/dice",
     "summary": "Create, handle and visualize a dice (simple).",
-    "repository": "https://github.com/bubens/dice.git",
     "license": "MIT",
-    "source-directories": [
-        "."
-    ],
-    "elm-version": "0.19.0 <= v < 0.20.0",
+    "version": "1.0.0",
+    "repository": "https://github.com/bubens/dice.git",
     "exposed-modules": [
         "Dice"
     ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
     "dependencies": {
         "elm/browser": "1.0.1 <= v < 2.0.0",
         "elm/core": "1.0.2 <= v < 2.0.0",
@@ -19,5 +16,5 @@
         "elm/random": "1.0.0 <= v < 2.0.0",
         "elm/svg": "1.0.1 <= v < 2.0.0"
     },
-    "test-dependencies" : {}
+    "test-dependencies": {}
 }
